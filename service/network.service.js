@@ -1,3 +1,4 @@
+const { count } = require('../model/comment.model')
 const networkModel = require('../model/network.model')
 const networkService = {
     createNetwork: async (username)=>{
@@ -37,6 +38,12 @@ const networkService = {
     },
     getRecivedRequests: async (username) => {
         return await networkModel.find({username:username},"recivedrequests")
+    },
+    getFollowersCount: async(username)=>{
+        return await networkModel.aggregate().match({username:username}).project({followerscount:{$size:"$followers"}})
+    },
+    getFollowingCount: async(username)=>{
+        return  await networkModel.aggregate().match({username:username}).project({followingcount:{$size:"$following"}})
     }
 }
 

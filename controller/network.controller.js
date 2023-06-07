@@ -17,7 +17,6 @@ router.use((req,res,next) => {
     }catch(err){
         res.status(401).send(err)
     }
-
 })
 
 router.post("/createnet",(req,res)=>{
@@ -30,7 +29,6 @@ router.post("/createnet",(req,res)=>{
         logger.error(err)
         res.status(500).send(err)
     }
-    
 })
 
 router.post("/sendrequest/:friendusername",(req,res)=>{
@@ -109,7 +107,6 @@ router.post("/createnetwork", async (req,res) => {
         logger.error(err)
         res.status(500).send(err)
     }
-
 })
 
 router.get("/listfollowers", async (req,res)=>{
@@ -122,7 +119,6 @@ router.get("/listfollowers", async (req,res)=>{
         logger.error(err)
         res.status(500).send(err)
     }
-
 })
 
 router.get("/listfollowings", async (req,res)=>{
@@ -135,7 +131,6 @@ router.get("/listfollowings", async (req,res)=>{
         logger.error(err)
         res.status(500).send(err)
     }
-
 })
 
 router.get("/listsentrequest", async (req,res)=>{
@@ -148,7 +143,6 @@ router.get("/listsentrequest", async (req,res)=>{
         logger.error(err)
         res.status(500).send(err)
     }
-
 })
 
 router.get("/listrecivedrequest", async (req,res)=>{
@@ -161,7 +155,30 @@ router.get("/listrecivedrequest", async (req,res)=>{
         logger.error(err)
         res.status(500).send(err)
     }
+})
 
+router.get("/followerscount", async (req,res)=>{
+    try{
+        let token = req.headers.authorization
+        let userinfo = jwtUtils.validateToken(token)
+        let followerscount = await networkService.getFollowersCount(userinfo.data) 
+        res.send(followerscount)
+    }catch(err){
+        logger.error(err)
+        res.status(500).send(err)
+    }
+})
+
+router.get("/followingcount", async (req,res)=>{
+    try{
+        let token = req.headers.authorization
+        let userinfo = jwtUtils.validateToken(token)
+        let followingcount = await networkService.getFollowingCount(userinfo.data) 
+        res.send(followingcount)
+    }catch(err){
+        logger.error(err)
+        res.status(500).send(err)
+    }
 })
 
 module.exports = router

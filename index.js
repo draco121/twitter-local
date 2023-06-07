@@ -8,6 +8,7 @@ const authController = require("./controller/auth.controller")
 const profileController = require("./controller/profile.controller")
 const postcontroller = require("./controller/post.controller")
 const networkcontroller = require("./controller/network.controller")
+const commentcontroller = require("./controller/comment.controller")
 const app = express()
 const port = config.SERVER_PORT
 app.use(express.json()); 
@@ -28,6 +29,7 @@ app.use('/auth', authController)
 app.use('/profile',profileController)
 app.use('/post',postcontroller)
 app.use('/net',networkcontroller)
+app.use('/comment',commentcontroller)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
