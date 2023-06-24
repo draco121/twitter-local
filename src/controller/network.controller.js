@@ -15,7 +15,7 @@ router.use((req,res,next) => {
             res.status(401).send()
         }
     }catch(err){
-        res.status(401).send(err)
+        res.status(401).send(err.message)
     }
 })
 
@@ -27,7 +27,7 @@ router.post("/createnet",(req,res)=>{
         res.send("network created")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -40,7 +40,7 @@ router.post("/sendrequest/:friendusername",(req,res)=>{
         res.send("follow request sent successfully")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
     
 })
@@ -54,7 +54,7 @@ router.delete("/declinerequest/:friendusername",(req,res)=>{
         res.send("follow request declined")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -67,7 +67,7 @@ router.delete("/withdrawrequest/:friendusername",(req,res)=>{
         res.send("follow request withdrawn")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -80,7 +80,7 @@ router.post("/acceptrequest/:friendusername", (req,res) => {
         res.send("follow request accepted")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -93,7 +93,7 @@ router.delete("/unfollow/:friendusername", (req,res) => {
         res.send("user unfollowed successfully")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -105,7 +105,7 @@ router.post("/createnetwork", async (req,res) => {
         res.sendStatus(201)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -117,7 +117,7 @@ router.get("/listfollowers", async (req,res)=>{
         res.json(followers)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -129,7 +129,7 @@ router.get("/listfollowings", async (req,res)=>{
         res.json(following)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -141,7 +141,7 @@ router.get("/listsentrequest", async (req,res)=>{
         res.json(sentRequests)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -153,7 +153,7 @@ router.get("/listrecivedrequest", async (req,res)=>{
         res.json(recivedRequests)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -165,7 +165,7 @@ router.get("/followerscount", async (req,res)=>{
         res.json({followerscount:followerscount})
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -177,7 +177,7 @@ router.get("/followingcount", async (req,res)=>{
         res.json({followingcount:followingcount})
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 

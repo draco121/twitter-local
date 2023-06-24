@@ -3,7 +3,7 @@ const bcrpyt = require('bcrypt');
 const jwtUtils = require('../utils/jwt-utils');
 const authService = {
   createAccount: async (userinfo)=>{
-    const result = await userModel.findOne({username: userinfo.username});
+    const result = await UserModel.findOne({username: userinfo.username});
     if (result) {
       throw new Error('User already exists');
     } else {

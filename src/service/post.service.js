@@ -1,7 +1,7 @@
 const PostModel = require('../model/post.model');
 const redisClient = require('../database/redis');
-const channels = require('../src/utils/channels');
-const logger = require('../src/utils/logger');
+const channels = require('../utils/channels');
+const logger = require('../utils/logger');
 const postService ={
   createpost: async (postdata)=>{
     try {

@@ -1,5 +1,5 @@
 const NetworkModel = require('../model/network.model');
-const logger = require('../src/utils/logger');
+const logger = require('..//utils/logger');
 const networkService = {
   createNetwork: async (username) => {
     try {

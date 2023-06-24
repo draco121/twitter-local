@@ -27,7 +27,7 @@ router.put("/create", (req,res)=>{
         res.send("profile created")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -38,7 +38,7 @@ router.patch("/update",(req,res) => {
         res.send("profile updated")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -49,7 +49,7 @@ router.delete("/delete/:username", (req,res) => {
         res.sendStatus(201)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }    
 })
 
@@ -60,7 +60,7 @@ router.get("/get/:username", async (req,res) => {
         res.json(profile)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }    
 })
 
@@ -71,7 +71,7 @@ router.get("/search/:username", async (req,res) => {
         res.json(profiles)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 

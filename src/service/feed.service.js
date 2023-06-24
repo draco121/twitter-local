@@ -1,8 +1,9 @@
 const redisClient = require('../database/redis');
-const redisKeys = require('../src/utils/redis.keys');
-const logger = require('../src/utils/logger');
+const redisKeys = require('..//utils/redis.keys');
+const logger = require('..//utils/logger');
 const networkService = require('../service/network.service');
 const postService = require('./post.service');
+const rediskeys = require('..//utils/redis.keys');
 const feedservice = {
 
   // pre computes feed whenever a user uploads a new post
@@ -22,7 +23,7 @@ const feedservice = {
 
   // If none of the followers have updated any post then this will
   // deal with generating a feed for that user
-  createFeed: (username) => {
+  createFeed: async (username) => {
     try {
       let following = [];
       let posts = [];
@@ -38,11 +39,30 @@ const feedservice = {
           posts = postService.getLatestPosts(username, limit);
         });
       }
-      redisClient.set(redisKeys.preComputedFeed(username,
+      await redisClient.set(redisKeys.preComputedFeed(username,
           JSON.stringify(posts)));
     } catch (err) {
       logger.error(`error creating feed for user: ${username}: ${err}`);
     }
+  },
+
+  getFeed: async (username, page, limit) => {
+    let feed = await redisClient.get(rediskeys.preComputedFeed(username));
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    if (feed | feed.length == 0) {
+      await this.createFeed();
+      feed = await redisClient.get(rediskeys.preComputedFeed(username));
+    }
+    const paginatedFeed = feed.slice(startIndex, endIndex);
+    const result = {
+      page,
+      limit,
+      totalPosts: feed.length,
+      totalPages: Math.ceil(feed.length / limit),
+      data: paginatedFeed,
+    };
+    return result;
   },
 };
 

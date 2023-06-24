@@ -26,7 +26,7 @@ router.post("/create",async (req,res)=>{
         res.send("post created")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
     
 })
@@ -38,7 +38,7 @@ router.delete("/delete/:postid",(req,res)=>{
         res.send("post removed")
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -49,7 +49,7 @@ router.get("/list/:username", async(req,res) => {
         res.json(posts)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 })
 
@@ -60,7 +60,7 @@ router.get("/:postid", async(req,res) => {
         res.json(posts)
     }catch(err){
         logger.error(err)
-        res.status(500).send(err)
+        res.status(500).send(err.message)
     }
 
 })

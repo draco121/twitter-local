@@ -9,6 +9,7 @@ const profileController = require('./controller/profile.controller');
 const postcontroller = require('./controller/post.controller');
 const networkcontroller = require('./controller/network.controller');
 const commentcontroller = require('./controller/comment.controller');
+const feedcontroller = require('./controller/feed.controller');
 const newPostNotifierSub = require('./events/feed.trigger');
 const channels = require('./utils/channels');
 const app = express();
@@ -32,6 +33,7 @@ app.use('/profile', profileController);
 app.use('/post', postcontroller);
 app.use('/net', networkcontroller);
 app.use('/comment', commentcontroller);
+app.use('/feed', feedcontroller);
 // eslint-disable-next-line require-jsdoc
 function startSubscribers() {
   newPostNotifierSub(channels.newPostNotifierChannel);
