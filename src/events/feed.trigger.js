@@ -17,9 +17,15 @@ const onMessage = async (message) => {
   });
 };
 const newPostNotifierSub =(channel)=>{
-  logger.info(`attempting to subscribe to channel 
-  ${channel} in updatefeed trigger` );
-  redisClient.subscribe(channel, onMessage);
+  try {
+    logger.info(`attempting to subscribe to channel 
+    ${channel} in updatefeed trigger` );
+    redisClient.subscribe(channel, onMessage);
+    logger.info(`channel ${channel } subscribed successfully`);
+  } catch (err) {
+    logger.error(`error occured while subscribing to 
+    channel ${channel} :${err}`);
+  }
 };
 
 module.exports = newPostNotifierSub;

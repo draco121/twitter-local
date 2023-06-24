@@ -20,7 +20,7 @@ router.use((req, res, next) => {
   }
 });
 
-router.post('/createnet', (req, res)=>{
+router.post('/create', (req, res)=>{
   try {
     const token = req.headers.authorization;
     const userinfo = jwtUtils.validateToken(token);
@@ -91,18 +91,6 @@ router.delete('/unfollow/:friendusername', (req, res) => {
     const userinfo = jwtUtils.validateToken(token);
     networkService.acceptFollowrequest(userinfo.data, friendusername);
     res.send('user unfollowed successfully');
-  } catch (err) {
-    logger.error(err);
-    res.status(500).send(err.message);
-  }
-});
-
-router.post('/createnetwork', async (req, res) => {
-  try {
-    const token = req.headers.authorization;
-    const userinfo = jwtUtils.validateToken(token);
-    await networkService.createNetwork(userinfo.data);
-    res.sendStatus(201);
   } catch (err) {
     logger.error(err);
     res.status(500).send(err.message);

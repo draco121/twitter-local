@@ -1,5 +1,5 @@
 const ProfileModel= require('../model/profile.model');
-
+const networkService = require('./network.service');
 
 const profileService = {
 
@@ -8,6 +8,7 @@ const profileService = {
     try {
       const profile = new ProfileModel(profiledata);
       await profile.save();
+      networkService.createNetwork(profiledata.username);
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while creating profile');

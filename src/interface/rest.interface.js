@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
 app.use('/auth', authController);
 app.use('/profile', profileController);
 app.use('/post', postcontroller);
-app.use('/net', networkcontroller);
+app.use('/network', networkcontroller);
 app.use('/comment', commentcontroller);
 app.use('/feed', feedcontroller);
 

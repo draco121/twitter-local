@@ -2,7 +2,6 @@
 const router = require('express').Router();
 const logger = require('../utils/logger');
 const authService = require('../service/auth.service');
-
 router.post('/register', async (req, res)=>{
   try {
     const userinfo = req.body;

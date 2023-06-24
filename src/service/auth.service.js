@@ -1,6 +1,7 @@
 const UserModel = require('../model/user.model');
 const bcrpyt = require('bcrypt');
 const jwtUtils = require('../utils/jwt-utils');
+const profileService = require('./profile.service');
 const authService = {
   createAccount: async (userinfo)=>{
     const result = await UserModel.findOne({username: userinfo.username});
@@ -11,6 +12,8 @@ const authService = {
       userinfo.password = password;
       const user = new UserModel(userinfo);
       await user.save();
+      // TODO: expose this method as a grpc
+      profileService.createProfile({username: userinfo.username});
     }
   },
   login: async (userinfo)=>{
