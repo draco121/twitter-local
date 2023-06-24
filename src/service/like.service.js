@@ -1,9 +1,9 @@
-const likeModel = require('../model/like.model');
+const LikeModel = require('../model/like.model');
 const logger = require('../utils/logger');
 const likeservice ={
   likePost: async (username, postid)=>{
     try {
-      await likeModel.findByIdAndUpdate(postid, {$addToSet: {likes: username}});
+      await LikeModel.findByIdAndUpdate(postid, {$addToSet: {likes: username}});
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while liking the post');
@@ -12,7 +12,7 @@ const likeservice ={
 
   unlikePost: async (username, postid)=>{
     try {
-      await likeModel.findByIdAndUpdate(postid, {$pull: {likes: username}});
+      await LikeModel.findByIdAndUpdate(postid, {$pull: {likes: username}});
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while unliking the post');

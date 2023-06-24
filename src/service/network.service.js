@@ -12,9 +12,9 @@ const networkService = {
   },
   sendFollowRequest: async (myusername, friendusername) => {
     try {
-      await networkModel.findOneAndUpdate({username: myusername},
+      await NetworkModel.findOneAndUpdate({username: myusername},
           {$addToSet: {sentrequests: friendusername}});
-      await networkModel.findOneAndUpdate({username: friendusername},
+      await NetworkModel.findOneAndUpdate({username: friendusername},
           {$addToSet: {recivedrequests: myusername}});
     } catch (err) {
       logger.error(err);
@@ -23,9 +23,9 @@ const networkService = {
   },
   withdrawFollowRequest: async (myusername, friendusername) => {
     try {
-      await networkModel.findOneAndUpdate({username: myusername},
+      await NetworkModel.findOneAndUpdate({username: myusername},
           {$pull: {sentrequests: friendusername}});
-      await networkModel.findOneAndUpdate({username: friendusername},
+      await NetworkModel.findOneAndUpdate({username: friendusername},
           {$pull: {recivedrequests: myusername}});
     } catch (err) {
       logger.error(err);
@@ -34,9 +34,9 @@ const networkService = {
   },
   declineFollowRequest: async (myusername, friendusername) => {
     try {
-      await networkModel.findOneAndUpdate({username: myusername},
+      await NetworkModel.findOneAndUpdate({username: myusername},
           {$pull: {recivedrequests: friendusername}});
-      await networkModel.findOneAndUpdate({username: friendusername},
+      await NetworkModel.findOneAndUpdate({username: friendusername},
           {$pull: {sentrequests: myusername}});
     } catch (err) {
       logger.log(err);
@@ -45,13 +45,13 @@ const networkService = {
   },
   acceptFollowrequest: async (myusername, friendusername) => {
     try {
-      await networkModel.findOneAndUpdate({username: myusername},
+      await NetworkModel.findOneAndUpdate({username: myusername},
           {$addToSet: {followers: friendusername}});
-      await networkModel.findOneAndUpdate({username: myusername},
+      await NetworkModel.findOneAndUpdate({username: myusername},
           {$pull: {recivedrequests: friendusername}});
-      await networkModel.findOneAndUpdate({username: friendusername},
+      await NetworkModel.findOneAndUpdate({username: friendusername},
           {$addToSet: {following: myusername}});
-      await networkModel.findOneAndUpdate({username: friendusername},
+      await NetworkModel.findOneAndUpdate({username: friendusername},
           {$pull: {sentrequests: myusername}});
     } catch (err) {
       logger.error(err);
@@ -60,9 +60,9 @@ const networkService = {
   },
   unfollow: async (myusername, friendusername) => {
     try {
-      await networkModel.findOneAndUpdate({username: myusername},
+      await NetworkModel.findOneAndUpdate({username: myusername},
           {$pull: {following: friendusername}});
-      await networkModel.findOneAndUpdate({username: friendusername},
+      await NetworkModel.findOneAndUpdate({username: friendusername},
           {$pull: {followers: myusername}});
     } catch (err) {
       logger.error(err);
@@ -71,7 +71,7 @@ const networkService = {
   },
   getFollowers: async (username) => {
     try {
-      return await networkModel.find({username: username}, 'followers');
+      return await NetworkModel.findOne({username: username}, 'followers');
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while fetching list of followers');
@@ -79,7 +79,7 @@ const networkService = {
   },
   getFollowing: async (username) => {
     try {
-      return await networkModel.find({username: username}, 'following');
+      return await NetworkModel.findOne({username: username}, 'following');
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while fetching list of following');
@@ -87,7 +87,7 @@ const networkService = {
   },
   getSentRequests: async (username) => {
     try {
-      return await networkModel.find({username: username}, 'sentrequests');
+      return await NetworkModel.find({username: username}, 'sentrequests');
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while fetching list of sent requests');
@@ -95,7 +95,7 @@ const networkService = {
   },
   getRecivedRequests: async (username) => {
     try {
-      return await networkModel.find({username: username}, 'recivedrequests');
+      return await NetworkModel.find({username: username}, 'recivedrequests');
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while fetching list of recived requests');
@@ -103,7 +103,7 @@ const networkService = {
   },
   getFollowersCount: async (username) => {
     try {
-      return await networkModel.aggregate().
+      return await NetworkModel.aggregate().
           match({username: username}).
           project({followerscount: {$size: '$followers'}});
     } catch (err) {
@@ -113,7 +113,7 @@ const networkService = {
   },
   getFollowingCount: async (username) => {
     try {
-      return await networkModel.aggregate().
+      return await NetworkModel.aggregate().
           match({username: username}).
           project({followingcount: {$size: '$following'}});
     } catch (err) {

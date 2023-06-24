@@ -17,7 +17,7 @@ const postService ={
 
   removePost: async (postid) => {
     try {
-      await postModel.findByIdAndRemove(postid);
+      await PostModel.findByIdAndRemove(postid);
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while deleting post');
@@ -26,7 +26,7 @@ const postService ={
 
   getPostList: async (username)=>{
     try {
-      return await postModel.find({username: username});
+      return await PostModel.find({username: username});
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while fetching post list');
@@ -35,7 +35,7 @@ const postService ={
 
   getPostById: async (postid)=>{
     try {
-      return await postModel.findById(postid);
+      return await PostModel.findById(postid);
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while fetching post by id');
@@ -44,8 +44,8 @@ const postService ={
 
   getLatestPosts: async (username, limit=5) => {
     try {
-      return await postModel.find({username: username})
-          .sort({_id: 1}).limit(limit);
+      return await PostModel.find({username: username})
+          .sort({_id: -1}).limit(limit);
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while getting latest posts');

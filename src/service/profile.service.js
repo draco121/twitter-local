@@ -18,7 +18,7 @@ const profileService = {
   // updates an existing user profile
   updateProfile: async (profiledata) => {
     try {
-      await profileModel.findOneAndUpdate({username: profiledata.username},
+      await ProfileModel.findOneAndUpdate({username: profiledata.username},
           profiledata);
     } catch (err) {
       logger.error(err);
@@ -29,7 +29,7 @@ const profileService = {
   // deletes an existing profile
   removeProfile: async (username) => {
     try {
-      await profileModel.findOneAndRemove({username: username});
+      await ProfileModel.findOneAndRemove({username: username});
     } catch (err) {
       logger.error(err);
       throw new Error('error occured while removing profile');
@@ -39,7 +39,7 @@ const profileService = {
   // gets the profile for given username
   getProfile: async (username) => {
     try {
-      const profile = await profileModel.findOne({username: username});
+      const profile = await ProfileModel.findOne({username: username});
       return profile;
     } catch (err) {
       logger.error(err);
@@ -50,7 +50,7 @@ const profileService = {
   // gets the list of profile for the given prefix as username
   getProfiles: async (username) => {
     try {
-      const profiles = await profileModel.
+      const profiles = await ProfileModel.
           find({username: new RegExp(username, 'i')});
       return profiles;
     } catch (err) {

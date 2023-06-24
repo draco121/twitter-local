@@ -11,8 +11,9 @@ const onMessage = async (message) => {
   const username = post.username;
   // TODO: implement grpc interface for this method
   // in network service when decomposing to microservices
-  const followers = await networkService.getFollowers(username);
-  followers.forEach( (follower) => {
+  const followersDoc = await networkService.getFollowers(username);
+  const followers = followersDoc.followers;
+  followers.forEach((follower) => {
     feedService.preComputeFeed(follower, post);
   });
 };

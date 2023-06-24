@@ -14,7 +14,7 @@ const commentservice= {
 
   deleteComment: async (commentid)=>{
     try {
-      await commentModel.findOneAndDelete(commentid);
+      await CommentModel.findOneAndDelete(commentid);
     } catch (err) {
       logger.error(err);
       throw new Error('error while deleting comment');
@@ -23,7 +23,7 @@ const commentservice= {
 
   getCommentList: async (postid)=>{
     try {
-      return await commentModel.find({postid: postid});
+      return await CommentModel.find({postid: postid});
     } catch (err) {
       logger.error(err);
       throw new Error('error while fetching list of comments');
@@ -32,7 +32,7 @@ const commentservice= {
 
   getCommentCount: async (postid) => {
     try {
-      return await commentModel.find({postid: postid}).count();
+      return await CommentModel.find({postid: postid}).count();
     } catch (err) {
       logger.error(err);
       throw new Error('error while getting comment count');

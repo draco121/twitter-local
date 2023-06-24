@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const logger = require('../utils/logger');
 const feedService = require('../service/feed.service');
-
+const jwtUtils = require('../utils/jwt-utils');
 router.use((req, res, next) => {
   try {
     const token = req.headers.authorization;
@@ -20,12 +20,12 @@ router.use((req, res, next) => {
 });
 
 
-router.get('/:username', (req, res) => {
+router.get('/:username', async (req, res) => {
   try {
     const username = req.params.username;
     const limit = req.query.limit;
     const page = req.query.page;
-    const feed = feedService.getFeed(username, page, limit);
+    const feed = await feedService.getFeed(username, page, limit);
     res.json(feed);
   } catch (err) {
     res.status(501).send(err.message);

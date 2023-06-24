@@ -17,7 +17,7 @@ const authService = {
     }
   },
   login: async (userinfo)=>{
-    const user = await userModel.findOne({username: userinfo.username});
+    const user = await UserModel.findOne({username: userinfo.username});
     if (user) {
       if (bcrpyt.compareSync(userinfo.password, user.password)) {
         return jwtUtils.createToken(userinfo.username);

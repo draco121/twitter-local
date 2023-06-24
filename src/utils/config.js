@@ -5,7 +5,7 @@ const config = {
   DATABASE_AUTH_SOURCE: 'admin',
   SERVER_PORT: 8000|process.env.PORT,
   SECRET_KEY: 'JAI__MATA__DI',
-  REDIS_URL: 'redis://default:redispw@localhost:49153',
+  REDIS_URL: 'redis://default:redispw@localhost:6379',
 };
 
 module.exports = config;
