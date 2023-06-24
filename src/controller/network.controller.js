@@ -114,7 +114,7 @@ router.get("/listfollowers", async (req,res)=>{
         let token = req.headers.authorization
         let userinfo = jwtUtils.validateToken(token)
         let followers = await networkService.getFollowers(userinfo.data) 
-        res.send(followers)
+        res.json(followers)
     }catch(err){
         logger.error(err)
         res.status(500).send(err)
@@ -126,7 +126,7 @@ router.get("/listfollowings", async (req,res)=>{
         let token = req.headers.authorization
         let userinfo = jwtUtils.validateToken(token)
         let following= await networkService.getFollowing(userinfo.data) 
-        res.send(following)
+        res.json(following)
     }catch(err){
         logger.error(err)
         res.status(500).send(err)
@@ -138,7 +138,7 @@ router.get("/listsentrequest", async (req,res)=>{
         let token = req.headers.authorization
         let userinfo = jwtUtils.validateToken(token)
         let sentRequests = await networkService.getSentRequests(userinfo.data) 
-        res.send(sentRequests)
+        res.json(sentRequests)
     }catch(err){
         logger.error(err)
         res.status(500).send(err)
@@ -150,7 +150,7 @@ router.get("/listrecivedrequest", async (req,res)=>{
         let token = req.headers.authorization
         let userinfo = jwtUtils.validateToken(token)
         let recivedRequests = await networkService.getRecivedRequests(userinfo.data) 
-        res.send(recivedRequests)
+        res.json(recivedRequests)
     }catch(err){
         logger.error(err)
         res.status(500).send(err)
@@ -162,7 +162,7 @@ router.get("/followerscount", async (req,res)=>{
         let token = req.headers.authorization
         let userinfo = jwtUtils.validateToken(token)
         let followerscount = await networkService.getFollowersCount(userinfo.data) 
-        res.send(followerscount)
+        res.json({followerscount:followerscount})
     }catch(err){
         logger.error(err)
         res.status(500).send(err)
@@ -174,7 +174,7 @@ router.get("/followingcount", async (req,res)=>{
         let token = req.headers.authorization
         let userinfo = jwtUtils.validateToken(token)
         let followingcount = await networkService.getFollowingCount(userinfo.data) 
-        res.send(followingcount)
+        res.json({followingcount:followingcount})
     }catch(err){
         logger.error(err)
         res.status(500).send(err)

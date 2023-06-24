@@ -9,7 +9,7 @@ router.use((req,res,next) => {
         let userinfo = jwtUtils.validateToken(token)
         if(userinfo){
               // Log an info message for each incoming request
-            logger.info(`Received a request for ${req.url} from ${userinfo.username}`);
+            logger.info(`Received a request for ${req.url} from ${userinfo.data}`);
             next();
         }else{
             res.status(401).send()
@@ -57,7 +57,7 @@ router.get("/get/:username", async (req,res) => {
     try{
         let username = req.params.username
         let profile  = await profileService.getProfile(username)
-        res.send(profile)
+        res.json(profile)
     }catch(err){
         logger.error(err)
         res.status(500).send(err)
@@ -68,7 +68,7 @@ router.get("/search/:username", async (req,res) => {
     try{
         let username = req.params.username
         let profiles = await profileService.getProfiles(username)
-        res.send(profiles)
+        res.json(profiles)
     }catch(err){
         logger.error(err)
         res.status(500).send(err)

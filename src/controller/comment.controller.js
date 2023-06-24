@@ -1,4 +1,5 @@
-const likeservice = require("../service/like.service")
+const { json } = require("express")
+const commentservice = require("../service/comment.service")
 const jwtUtils = require("../utils/jwt-utils")
 const router  = require("express").Router()
 const logger = require('../utils/logger')
@@ -9,7 +10,7 @@ router.use((req,res,next) => {
         let userinfo = jwtUtils.validateToken(token)
         if(userinfo){
               // Log an info message for each incoming request
-            logger.info(`Received a request for ${req.url} from ${userinfo.username}`);
+            logger.info(`Received a request for ${req.url} from ${userinfo.data}`);
             next();
         }else{
             res.status(401).send()
@@ -21,35 +22,47 @@ router.use((req,res,next) => {
 })
 
 
-router.put("/create/:postid",(req,res)=>{
+router.put("/create",(req,res)=>{
     try{
         let token = req.headers.authorization
-        let postid = req.params.postid
         let userinfo = jwtUtils.validateToken(token)
-        likeservice.likePost(userinfo.data,postid)
+        let commentdata= req.body
+        commentdata.username = userinfo.data
+        commentservice.createComment(commentdata)
         res.sendStatus(201)
+    }catch(err){
+        res.status(401).send(err)
+    }
+    
+
+})
+
+router.delete("/delete/:commentid",(req,res)=>{
+    try{
+        let commentid= req.params.commentid
+        commentservice.deleteComment(commentid)
+        res.send("comment removed")
+    }catch(err){
+        res.status(401).send(err)
+    }
+
+})
+
+router.get("/listcomment/:postid",async (req,res)=>{
+    try{
+        let postid = req.params.postid
+        let comments = await commentservice.getCommentList(postid)
+        res.json(comments)
     }catch(err){
         res.status(401).send(err)
     }
 })
 
-router.delete("/delete/:postid",(req,res)=>{
-    try{
-        let token = req.headers.authorization
-        let postid = req.params.postid
-        let userinfo = jwtUtils.validateToken(token)
-        likeservice.unlikePost(userinfo.data,postid)
-        res.sendStatus(201)
-    }catch(err){
-        res.status(401).send(err)
-    }
-})
-
-router.get("/likescount/:postid", async(req,res) => {
+router.get("/commentcount/:postid", async(req,res) => {
     try{
         let postid = req.params.postid
-        let likescount = await likeservice.countLike(postid)
-        res.send({likescount:likescount})
+        let commentcount = await commentservice.getCommentCount(postid)
+        res.json({commentcount:commentcount})
     }catch(err){
         res.status(401).send(JSON.stringify(err))
     }
